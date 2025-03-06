@@ -1,0 +1,18 @@
+.search-bar {
+    margin: 2rem auto;
+    max-width: 50vw;
+    position: relative;
+    width: 100%;
+
+    input {
+        padding: 1rem;
+        width: 100%;
+    }
+
+    button {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding: 1rem;
+    }
+}
