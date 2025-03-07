@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useSearch } from "../../context/searchContext";
 import SearchBar from "../SearchBar/SearchBar"
 import DropdownResults from "../DropdownResults/DropdownResults"
 
 function SearchPage() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const searchTermIsValid = searchTerm && searchTerm !== '';
+    const { searchTerm, setSearchTerm } = useSearch();
+    const searchTermIsValid = searchTerm !== '';
 
     return (
         <main>
@@ -15,8 +15,10 @@ function SearchPage() {
 
             <section className="search-section" aria-labelledby="search-heading">
                 <h2 id="search-heading" className="visually-hidden">City Search</h2>
-                <SearchBar onSearch={(city) => setSearchTerm(city)} />
-                {searchTermIsValid && <DropdownResults searchTerm={searchTerm} />}
+                <SearchBar />
+                {searchTermIsValid && 
+                    <DropdownResults />
+                }
             </section>
         </main>
     )

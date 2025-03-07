@@ -1,27 +1,42 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
+import { useSearch } from "../../context/searchContext";
 import './SearchBar.css';
 
-function SearchBar({ onSearch }: { onSearch: (term: string) => void }) {
+function SearchBar() {
+    const {focusedIndex, setFocusedIndex, setSearchTerm} = useSearch();
     const [city, setCity] = useState('');
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleSearch = (e?: React.ChangeEvent<HTMLInputElement> | null) => {
         if (!e || e.target.value === '') {
-            onSearch('');
+            setSearchTerm('');
         }
         
         e ? setCity(e.target.value) : setCity('');
+    }
+
+    const focusList = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'ArrowDown') {
+            setFocusedIndex(0);
+        }
     }
 
     useEffect(() => {
         if (!city) return;
 
         const timer = setTimeout(() => {
-            onSearch(city);
+            setSearchTerm(city);
         }, 500);
 
         return () => clearTimeout(timer); // Clear the timeout if city changes again
     }, [city]);
+
+    useEffect(() => {
+        if (focusedIndex === -1 && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [focusedIndex]);
 
     return (
         <form className="search-form" role="search">
@@ -33,6 +48,8 @@ function SearchBar({ onSearch }: { onSearch: (term: string) => void }) {
                 type="text"
                 value={city}
                 onChange={handleSearch}
+                onKeyDown={focusList}
+                ref={inputRef}
             />
             {city !== '' &&
                 <button type="button" onClick={() => handleSearch()}>
