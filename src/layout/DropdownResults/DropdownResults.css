@@ -1,0 +1,33 @@
+.dropdown-results {
+    position: absolute;
+    top: 115%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 0 .5rem rgba(0, 0, 0, 0.1);
+
+    ul {
+        li {
+            color: var(--light-gray);
+
+            a {
+                display: block;
+                padding: .5rem 1rem;
+                text-align: left;
+                transition: all .3s;
+                width: 100%;
+
+                &:hover,
+                &:focus {
+                    background-color: var(--background-hover);
+                }
+            }
+
+            strong {
+                color: var(--dark-gray);
+            }
+        }
+    }
+}

@@ -14,10 +14,13 @@ function SearchBar() {
     }
 
     return (
-        <section className="search-bar">
+        <form className="search-form" role="search">
+            <label htmlFor="city-input" className="visually-hidden">Search for a city</label>
             <input 
-                type="text" 
+                autoComplete="off" 
+                id="city-input" 
                 placeholder="Please enter the city" 
+                type="text" 
                 value={city} 
                 onChange={handleCitySearch}
             />
@@ -26,7 +29,7 @@ function SearchBar() {
                     <X color={`var(--dark-gray)`} />
                 </button>
             }
-        </section>
+        </form>
     )
 }
 
