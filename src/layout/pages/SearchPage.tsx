@@ -4,6 +4,7 @@ import DropdownResults from "../DropdownResults/DropdownResults"
 
 function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
+    const searchTermIsValid = searchTerm && searchTerm !== '';
 
     return (
         <main>
@@ -15,7 +16,7 @@ function SearchPage() {
             <section className="search-section" aria-labelledby="search-heading">
                 <h2 id="search-heading" className="visually-hidden">City Search</h2>
                 <SearchBar onSearch={(city) => setSearchTerm(city)} />
-                {searchTerm && <DropdownResults searchTerm={searchTerm} />}
+                {searchTermIsValid && <DropdownResults searchTerm={searchTerm} />}
             </section>
         </main>
     )

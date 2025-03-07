@@ -5,9 +5,12 @@ import './SearchBar.css';
 function SearchBar({ onSearch }: { onSearch: (term: string) => void }) {
     const [city, setCity] = useState('');
 
-    const resetSearchTerm = () => {
-        setCity(''); 
-        onSearch('');
+    const handleSearch = (e?: React.ChangeEvent<HTMLInputElement> | null) => {
+        if (!e || e.target.value === '') {
+            onSearch('');
+        }
+        
+        e ? setCity(e.target.value) : setCity('');
     }
 
     useEffect(() => {
@@ -29,10 +32,10 @@ function SearchBar({ onSearch }: { onSearch: (term: string) => void }) {
                 placeholder="Please enter the city"
                 type="text"
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
+                onChange={handleSearch}
             />
             {city !== '' &&
-                <button type="button" onClick={resetSearchTerm}>
+                <button type="button" onClick={() => handleSearch()}>
                     <X color="var(--dark-gray)" />
                 </button>
             }
