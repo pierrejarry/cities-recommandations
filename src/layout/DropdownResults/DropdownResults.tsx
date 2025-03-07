@@ -1,5 +1,6 @@
 import './DropdownResults.css'
 import useCities from '../../hooks/useCities'
+import { Link } from 'react-router-dom';
 
 function DropdownResults({ searchTerm }: { searchTerm: string }) {
     const { data, isLoading, error } = useCities(searchTerm);
@@ -17,9 +18,9 @@ function DropdownResults({ searchTerm }: { searchTerm: string }) {
             <ul>
                 {data.data.map((city) => (
                     <li key={city.city} role="option">
-                        <a href=''>
+                        <Link to={`destination?city=${city.name}`}>
                             <strong>{city.name}</strong> - {city.country}
-                        </a>
+                        </Link>
                     </li>
                 ))}
             </ul>

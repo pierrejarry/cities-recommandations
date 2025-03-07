@@ -51,7 +51,6 @@ function useCities(searchTerm: string) {
         }
 
         const data = await response.json();
-        console.log('data', data);
         return data;
     };
 
