@@ -1,6 +1,13 @@
 import './DropdownResults.css'
+import useCities from '../../hooks/useCities'
 
-function DropdownResults() {
+function DropdownResults({ searchTerm }: { searchTerm: string }) {
+    const { data, isLoading, error } = useCities(searchTerm);
+    
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p>Error loading cities</p>;
+    if (!data?.data?.length) return <p>No results found</p>;
+    
     return (
         <div
             className="dropdown-results"
@@ -8,21 +15,13 @@ function DropdownResults() {
             aria-labelledby="search-heading"
         >
             <ul>
-                <li role="option">
-                    <a href=''>
-                        <strong>New York</strong> - United States
-                    </a>
-                </li>
-                <li role="option">
-                    <a href=''>
-                        <strong>New Delhi</strong> - India
-                    </a>
-                </li>
-                <li role="option">
-                    <a href=''>
-                        <strong>New Orleans</strong> - United States
-                    </a>
-                </li>
+                {data.data.map((city) => (
+                    <li key={city.city} role="option">
+                        <a href=''>
+                            <strong>{city.name}</strong> - {city.country}
+                        </a>
+                    </li>
+                ))}
             </ul>
         </div>
     )
