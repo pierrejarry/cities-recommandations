@@ -57,3 +57,14 @@ export interface Place {
 export interface ApiResponse {
     results: Place[];
 }
+
+export interface Tip {
+    id: string;
+    created_at: string;
+    text: string;
+}
+
+export interface PlaceResult extends Place {
+    tips: Tip[];
+    image: string;
+}

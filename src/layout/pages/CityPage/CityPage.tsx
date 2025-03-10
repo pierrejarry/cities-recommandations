@@ -1,5 +1,5 @@
-import { useEffect, JSX } from "react";
-import { useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom";
+import ListItem from "./ListItem";
 import useRecommendations from "../../../hooks/useRecommendations";
 import './CityPage.css';
 
@@ -36,32 +36,14 @@ function CityPage() {
                     {places?.length ? (
                         <div className="restaurant-list">
                             {places.map((restaurant) => (
-                                <div key={restaurant.fsq_id} className="restaurant-item">
-                                    <img
-                                        src={restaurant.image}
-                                        alt={restaurant.name}
-                                        className="restaurant-image"
-                                        width={300}
-                                    />
-
-                                    <div className="restaurant-item-content">
-                                        <h3>{restaurant.name}</h3>
-
-                                        <p>
-                                            <strong>Category:</strong> {restaurant.categories[0]?.name || "Restaurant"}
-                                        </p>
-                                        <p>
-                                            <strong>Address:</strong> {restaurant.location.address} {restaurant.location.locality} {restaurant.location.postcode}
-                                        </p>
-
-                                        <h4>Comments from the clients</h4>
-                                        <ul>
-                                            {restaurant.tips.map((tip, index) => (
-                                                <li key={index}>{tip.text}</li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                </div>
+                                <ListItem 
+                                    key={restaurant.fsq_id} 
+                                    image={restaurant.image}
+                                    name={restaurant.name}
+                                    category={restaurant.categories[0]?.name || "Restaurant"}
+                                    address={`${restaurant.location.address} ${restaurant.location.locality} ${restaurant.location.postcode}`}
+                                    tips={restaurant.tips}
+                                />
                             ))}
                         </div>
                     ) : (

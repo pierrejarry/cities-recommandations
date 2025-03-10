@@ -1,19 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ApiResponse, Place } from "../utils/recommendationsTypes";
-
-
-interface Tip {
-    id: string;
-    created_at: string;
-    text: string;
-}
-
-interface PlaceResult extends Place {
-    tips: Tip[];
-    image: string;
-}
-
-
+import { ApiResponse, PlaceResult, Tip } from "../utils/recommendationsTypes";
 
 function useRecommendations(city: string) {
     const token = import.meta.env.VITE_FOURSQUARE_API_KEY;
