@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { useSearch } from '../../context/searchContext';
-import useCities from '../../hooks/useCities'
+import { useSearch } from '../../../context/searchContext';
+import useCities from '../../../hooks/useCities'
 import './DropdownResults.css'
 
 function DropdownResults() {
@@ -16,7 +16,7 @@ function DropdownResults() {
         } else if (e.key === 'ArrowUp') {
             focusedIndex === 0 ? setFocusedIndex(-1) : setFocusedIndex(Math.max(focusedIndex - 1, 0));
             e.preventDefault();
-        } else if(e.key === 'Escape') {
+        } else if (e.key === 'Escape') {
             setFocusedIndex(-1);
         }
     };
@@ -27,10 +27,6 @@ function DropdownResults() {
         }
     }, [focusedIndex, data])
 
-    if (isLoading) return <p>Loading...</p>;
-    if (error) return <p>Error loading cities</p>;
-    if (!data?.data?.length) return <p>No results found</p>;
-    
     return (
         <div
             className="dropdown-results"
@@ -39,23 +35,34 @@ function DropdownResults() {
             onKeyDown={handleKeyDown}
             tabIndex={-1}
         >
-            <ul>
-                {data.data.map((city, index) => (
-                    <li 
-                        key={city.city} 
-                        role="option"
-                    >
-                        <Link 
-                            to={`destination?city=${city.name}`} 
-                            ref={el => {
-                                linkRefs.current[index] = el;
-                            }}
+            {/* Loading */}
+            {isLoading && <p>Loading...</p>}
+
+            {/* Error */}
+            {!isLoading && error && <p>Error loading cities</p>}
+
+            {/* No result */}
+            {!isLoading && !data?.data?.length ?
+                <p>No results found</p> :
+                data?.data?.length &&
+                <ul>
+                    {data.data.map((city, index) => (
+                        <li
+                            key={city.city}
+                            role="option"
                         >
-                            <strong>{city.name}</strong> - {city.country}
-                        </Link>
-                    </li>
-                ))}
-            </ul>
+                            <Link
+                                to={`/destination?city=${city.name}`}
+                                ref={el => {
+                                    linkRefs.current[index] = el;
+                                }}
+                            >
+                                <strong>{city.name}</strong> - {city.country}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+            }
         </div>
     )
 }

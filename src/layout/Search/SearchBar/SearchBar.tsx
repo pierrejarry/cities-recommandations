@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { X } from "lucide-react";
-import { useSearch } from "../../context/searchContext";
+import { useSearch } from "../../../context/searchContext";
 import './SearchBar.css';
 
 function SearchBar() {
@@ -17,6 +17,8 @@ function SearchBar() {
     }
 
     const focusList = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') e.preventDefault();
+
         if (e.key === 'ArrowDown') {
             setFocusedIndex(0);
         }
