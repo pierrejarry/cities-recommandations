@@ -26,6 +26,7 @@
         }
 
         p {
+            color: var(--dark-gray);
             margin: .5rem 0;
         }
 

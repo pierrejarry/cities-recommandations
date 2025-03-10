@@ -2,12 +2,36 @@ import { useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom';
 import { useSearch } from '../../../context/searchContext';
 import useCities from '../../../hooks/useCities'
+import Loading from '../../../components/Loading/Loading';
+import ErrorMessage from '../../../components/ErrorMessage/ErrorMessage';
 import './DropdownResults.css'
 
 function DropdownResults() {
-    const { focusedIndex, searchTerm, setFocusedIndex } = useSearch();
+    const { 
+        focusedIndex, 
+        searchTerm, 
+        setFocusedIndex,
+        setDropdownIsOpen 
+    } = useSearch();
     const { data, isLoading, error } = useCities(searchTerm);
     const linkRefs = useRef<Array<HTMLAnchorElement | null>>([])
+    const dropdownRef = useRef<HTMLDivElement | null>(null);
+
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+                setDropdownIsOpen(false);
+            }
+        };
+
+        // Add the event listener to the document
+        document.addEventListener('mousedown', handleClickOutside);
+
+        // Clean up the event listener on component unmount
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (e.key === 'ArrowDown') {
@@ -34,12 +58,13 @@ function DropdownResults() {
             aria-labelledby="search-heading"
             onKeyDown={handleKeyDown}
             tabIndex={-1}
+            ref={dropdownRef}
         >
             {/* Loading */}
-            {isLoading && <p>Loading...</p>}
+            {isLoading && <Loading />}
 
             {/* Error */}
-            {!isLoading && error && <p>Error loading cities</p>}
+            {!isLoading && error && <ErrorMessage text='Error loading cities' />}
 
             {/* No result */}
             {!isLoading && !data?.data?.length ?

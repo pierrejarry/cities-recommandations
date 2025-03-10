@@ -4,13 +4,19 @@ import { useSearch } from "../../../context/searchContext";
 import './SearchBar.css';
 
 function SearchBar() {
-    const {focusedIndex, setFocusedIndex, setSearchTerm} = useSearch();
+    const {
+        focusedIndex, 
+        setFocusedIndex, 
+        setSearchTerm,
+        setDropdownIsOpen
+    } = useSearch();
     const [city, setCity] = useState('');
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleSearch = (e?: React.ChangeEvent<HTMLInputElement> | null) => {
         if (!e || e.target.value === '') {
             setSearchTerm('');
+            setDropdownIsOpen(false);
         }
         
         e ? setCity(e.target.value) : setCity('');

@@ -4,13 +4,12 @@ import DropdownResults from "./DropdownResults/DropdownResults"
 import './Search.css'
 
 function Search() {
-    const { searchTerm } = useSearch();
-    const searchTermIsValid = searchTerm !== '';
+    const { dropdownIsOpen } = useSearch();
 
     return (
         <div className="search">
             <SearchBar />
-            {searchTermIsValid &&
+            {dropdownIsOpen &&
                 <DropdownResults />
             }
         </div>

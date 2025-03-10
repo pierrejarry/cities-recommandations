@@ -1,14 +1,16 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useSearch } from "../../../context/searchContext";
+import ErrorMessage from "../../../components/ErrorMessage/ErrorMessage";
+import Loading from "../../../components/Loading/Loading";
 import Search from "../../Search/Search";
 import ListItem from "./ListItem";
 import useRecommendations from "../../../hooks/useRecommendations";
 import './CityPage.css';
-import { useEffect } from "react";
 
 function CityPage() {
     const location = useLocation();
-    const { setSearchTerm } = useSearch();
+    const { setSearchTerm, setDropdownIsOpen } = useSearch();
     const searchParams = new URLSearchParams(location.search);
     const city = searchParams.get('city');
     const { data: places, isLoading, error } = useRecommendations(city!);
@@ -16,6 +18,7 @@ function CityPage() {
 
     useEffect(() => {
         setSearchTerm('');
+        setDropdownIsOpen(false);
     }, [city]);
 
     if (!city) {
@@ -39,10 +42,14 @@ function CityPage() {
                 <p>Discover the best restaurants in town! From cozy cafés to fine dining experiences, explore a curated list of top places to eat in {city}. Enjoy delicious meals and unique flavors that make this city special.</p>
 
                 {/* Loading */}
-                {isLoading && <p>Loading results...</p>}
+                {isLoading && 
+                    <Loading text="Loading results" />
+                }
 
                 {/* Error */}
-                {error && <p>Error: {error.message}</p>}
+                {error && 
+                    <ErrorMessage text={`Error: ${error.message}`} /> 
+                }
 
                 {/* Show Results */}
                 {!isLoading && !error && (
