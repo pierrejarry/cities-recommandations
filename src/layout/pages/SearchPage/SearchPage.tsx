@@ -1,9 +1,9 @@
-import { useSearch } from "../../context/searchContext";
-import SearchBar from "../SearchBar/SearchBar"
-import DropdownResults from "../DropdownResults/DropdownResults"
+import { useSearch } from "../../../context/searchContext";
+import SearchBar from "../../SearchBar/SearchBar"
+import DropdownResults from "../../DropdownResults/DropdownResults"
 
 function SearchPage() {
-    const { searchTerm, setSearchTerm } = useSearch();
+    const { searchTerm } = useSearch();
     const searchTermIsValid = searchTerm !== '';
 
     return (

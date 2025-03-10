@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 
 const SearchPage = lazy(() => import('./layout/pages/SearchPage'));
-const CityPage = lazy(() => import('./layout/pages/CityPage'));
+const CityPage = lazy(() => import('./layout/pages/CityPage/CityPage'));
 
 function App() {
   return (
